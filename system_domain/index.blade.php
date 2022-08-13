@@ -48,7 +48,7 @@
                         <form action="{{ route('systemDomainStore') }}" method="POST">
                             @csrf
 
-                            <div class="form-group row">
+                            {{-- <div class="form-group row">
 
                                 <label for="system_id" class="col-lg-2 col-form-label"><b>System Id</b></label>
 
@@ -68,7 +68,7 @@
 
                                 </div>
 
-                            </div>
+                            </div> --}}
 
                             <div class="form-group row">
 
