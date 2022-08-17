@@ -33,27 +33,41 @@ class UBSunlockController extends Controller
     $branch_code = Auth::user()->branch;
 
     $data_get = DB::table('ubs_unlock_request')->where('req_name', '=', $req_name)->where('status', '=', 0)->get();
-    if($data_get->count() > 0) {
-      return redirect()->back()->with('message','Unlock Request Already Exists!!');
+    if ($data_get->count() > 0) {
+      return redirect()->back()->with('message', 'Unlock Request Already Exists!!');
     } else {
       $ok =  DB::table('ubs_unlock_request')->insert([
         'req_name' => $request->req_name,
         'status'   => '0',
-        'br_code' =>$branch_code,
+        'br_code' => $branch_code,
         'maker_user_id' => $user_id,
         'entry_date' => $currentTimestamp,
       ]);
-  
-      if($ok == true){
-        return redirect()->back()->with('message','Unlock Request Sent successfully!!');
-      }
-      else{
-        return redirect()->back()->with('message','Something went wrong. Please try letter!!');
+
+      if ($ok == true) {
+        return redirect()->back()->with('message', 'Unlock Request Sent successfully!!');
+      } else {
+        return redirect()->back()->with('message', 'Something went wrong. Please try letter!!');
       }
     }
   }
-  public function authorizeList(){
+
+  public function authorizeList()
+  {
     $authorize_get_data = DB::table('ubs_unlock_request')->get();
-   return view('ubs_unlock.authorize_list',compact('authorize_get_data'));
+    return view('ubs_unlock.authorize_list', compact('authorize_get_data'));
+  }
+
+  public function changeStatus_authorize($id)
+  {
+
+    DB::update(DB::RAW('UPDATE ubs_unlock_request SET status = 1 WHERE id = ' . $id));
+    return redirect()->back()->with('authorize','Status Authorizetion Successfully!!');
+  }
+  public function changeStatus_decline($id)
+  {
+
+    DB::update(DB::RAW('UPDATE ubs_unlock_request SET status = 2 WHERE id = ' . $id));
+    return redirect()->back()->with('decline','Status Declined Successfully!!');
   }
 }
