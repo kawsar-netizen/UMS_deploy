@@ -35,7 +35,7 @@
               </tr>
 
              
-             {{-- Editing code by Kawsar --}}
+             {{-- Editing code by kawsar --}}
               <tr>
                   <th>System Name</th>
                   <td><input type="text" class="form-control" name="system_name" id="system_name" value="<?php echo $single_fetch_data->system_name;?>"></td>

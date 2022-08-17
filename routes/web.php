@@ -279,6 +279,12 @@ Route::post('system_domain','SystemDomainController@system_domain_store')->name(
 Route::get('system_domain/edit/{id}','SystemDomainController@system_domainedit')->name('systemDomainedit');
 Route::post('system_domian/update/{id}','SystemDomainController@system_domianupdate')->name('systemDomainupdate');
 
+// UBS user unlock route
+Route::get('ubs','UBSunlockController@ubsUnlock')->name('UBSunlock');
+Route::post('ubs','UBSunlockController@ubsUnlock_Store')->name('UBSunlockStore');
+
+Route::get('authorize','UBSunlockController@authorizeList')->name('AuthorizeList');
+
 //System domain route here by Kawsar(end)
 
 
@@ -311,6 +317,7 @@ Route::post('get_sys_user_id_val', 'BranchUserController@get_sys_user_id_val');
 // Coding start by kawsar
 
 Route::get('system-user-id-map-new', 'BranchUserController@system_user_id_map_new')->name('system-user-id-map-new');
+Route::post('system_user_id_map_insert_new', 'BranchUserController@system_user_id_map_insert_new')->name('system-user-id-map-insert-new');
 
 // Coding end by kawsar
 
