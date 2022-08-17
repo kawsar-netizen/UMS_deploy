@@ -284,6 +284,8 @@ Route::get('ubs','UBSunlockController@ubsUnlock')->name('UBSunlock');
 Route::post('ubs','UBSunlockController@ubsUnlock_Store')->name('UBSunlockStore');
 
 Route::get('authorize','UBSunlockController@authorizeList')->name('AuthorizeList');
+Route::post('authorize/status/{id}','UBSunlockController@changeStatus_authorize')->name('changeStatus_authorize');
+Route::post('decline/status/{id}','UBSunlockController@changeStatus_decline')->name('changeStatus_decline');
 
 //System domain route here by Kawsar(end)
 
