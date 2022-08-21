@@ -66,9 +66,13 @@
                                 </div>
                             </div>
                             <div class="form-group row">
+                                @if($name != "")
                                 <div class="offset-lg-2 col-lg-10">
                                     <input type="submit"class="btn btn-sm btn-success insert_btn" value="Unlock Request">
                                 </div>
+                                @elseif($name == "")
+                                <font color='red' size='5pt'>*** Please map the UBS ID ***</font>
+                                @endif
                             </div>
 
                         </form>

@@ -70,53 +70,56 @@
 
 
                             <tbody>
+                                @if (Auth::user()->role == 5 || Auth::user()->role == 8 || Auth::user()->role == 10)
                                 @foreach ($authorize_get_data as $item)
-                                    <tr>
-                                        <td>{{ $loop->iteration }}</td>
-                                        <td>{{ $item->req_name }}</td>
-                                        <td>
-                                            @if ($item->status == '0')
-                                                <div class="mb-2 mr-2 badge badge-warning">Initiate</div>
-                                            @elseif($item->status == '1')
-                                                <div class="mb-2 mr-2 badge badge-info">Authorize</div>
-                                            @else
-                                                <div class="mb-2 mr-2 badge badge-danger">Declined</div>
-                                            @endif
-                                        </td>
-                                        <td>{{ $item->br_code }}</td>
-                                        <td>
-                                            @php
-                                                $user = DB::table('users')
-                                                    ->where('id', '=', $item->maker_user_id)
-                                                    ->first();
-                                            @endphp
-                                            {{ $user->name }}
-                                        </td>
-                                        <td>{{ $item->entry_date }}</td>
-                                        <td style="width: 22%;text-align: center;">
+                                <tr>
+                                    <td>{{ $loop->iteration }}</td>
+                                    <td>{{ $item->req_name }}</td>
+                                    <td>
+                                        @if ($item->status == '0')
+                                            <div class="mb-2 mr-2 badge badge-warning">Initiate</div>
+                                        @elseif($item->status == '1')
+                                            <div class="mb-2 mr-2 badge badge-info">Authorize</div>
+                                        @else
+                                            <div class="mb-2 mr-2 badge badge-danger">Declined</div>
+                                        @endif
+                                    </td>
+                                    <td>{{ $item->br_code }}</td>
+                                    <td>
+                                        @php
+                                            $user = DB::table('users')
+                                                ->where('id', '=', $item->maker_user_id)
+                                                ->first();
+                                        @endphp
+                                        {{ $user->name }}
+                                    </td>
+                                    <td>{{ $item->entry_date }}</td>
+                                    <td style="width: 22%;text-align: center;">
 
-                                                <form action="{{ route('changeStatus_authorize', $item->id) }}" method="POST">
-                                                    {{ csrf_field() }}
-                                                    <button type="submit" class="btn btn-primary btn-sm" name="status"
-                                                        value="1" style="margin-bottom: 5px;">Authorize</button>
-                                                </form>
-                                                {{-- <br> --}}
-                                                <form action="{{ route('changeStatus_decline', $item->id) }}" method="POST">
-                                                    {{ csrf_field() }}
-                                                    <button type="submit" class="btn btn-danger btn-sm" name="status"
-                                                        value="2">Declined</button>
-                                                </form>
-                                       
-                                            {{-- <a href="">
-                                                <button type="button" class="btn btn-primary btn-sm">Authorize</button>
-                                            </a>
-                                            <a href="">
-                                                <button type="button" class="btn btn-danger btn-sm">Declined</button>
-                                            </a> --}}
+                                            <form action="{{ route('changeStatus_authorize', $item->id) }}" method="POST">
+                                                {{ csrf_field() }}
+                                                <button type="submit" class="btn btn-primary btn-sm" name="status"
+                                                    value="1" style="margin-bottom: 5px;">Authorize</button>
+                                            </form>
+                                            {{-- <br> --}}
+                                            <form action="{{ route('changeStatus_decline', $item->id) }}" method="POST">
+                                                {{ csrf_field() }}
+                                                <button type="submit" class="btn btn-danger btn-sm" name="status"
+                                                    value="2">Declined</button>
+                                            </form>
+                                   
+                                        {{-- <a href="">
+                                            <button type="button" class="btn btn-primary btn-sm">Authorize</button>
+                                        </a>
+                                        <a href="">
+                                            <button type="button" class="btn btn-danger btn-sm">Declined</button>
+                                        </a> --}}
 
-                                        </td>
-                                    </tr>
-                                @endforeach
+                                    </td>
+                                </tr>
+                            @endforeach
+
+                                @endif
 
                             </tbody>
 
