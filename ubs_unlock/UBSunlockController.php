@@ -63,6 +63,7 @@ if(count($user_get_data)>0){
     $usr_branch= Auth::user()->branch;
     $usr_role= Auth::user()->role;
     $authorize_get_data = DB::table('ubs_unlock_request')->where('status',0)->where('maker_user_id','!=',$usr_primary_id)->where('br_code','=',$usr_branch)->get();
+
     return view('ubs_unlock.authorize_list', compact('authorize_get_data'));
   }
 
@@ -70,8 +71,20 @@ if(count($user_get_data)>0){
   {
     $user_id = DB::table('ubs_unlock_request')->where('id', $id)->first();
     $userId = $user_id->req_name;
-
     $responseData = $this->DoLogOutUser($userId);
+    $currentTimestamp = date('Y-m-d H:i:s');
+    $authUserId = Auth::user()->id;
+
+    DB::table('ubs_unlock_api_log')->insert([
+      'date_time' => $currentTimestamp,
+      'request_user_id' => $responseData['user_id'],
+      "message"    =>  $responseData['message'],
+      'description' => $responseData['description'],
+      'request' => $responseData['request'],
+      'response' => $responseData['response'],
+      'request_by' => $authUserId,
+    ]);
+
     if($responseData['is_success'] == 'success') {
         DB::update(DB::RAW('UPDATE ubs_unlock_request SET status = 1 WHERE id = ' . $id));
         return redirect()->back()->with('authorize',$responseData['description']);
